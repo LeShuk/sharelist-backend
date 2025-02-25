@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.config;
+package ru.sharelist.sharelist.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.sharelist.sharelist.filter.JwtFilter;
+import ru.sharelist.sharelist.security.filter.JwtFilter;
 
 @Configuration
 @EnableWebSecurity

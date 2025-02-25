@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.model.dto;
+package ru.sharelist.sharelist.security.model.dto;
 
 /**
  * Запрос для обновления access токена

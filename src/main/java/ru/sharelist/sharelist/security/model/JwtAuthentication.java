@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.model;
+package ru.sharelist.sharelist.security.model;
 
 import lombok.Getter;
 import lombok.Setter;

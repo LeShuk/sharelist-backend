@@ -1,13 +1,13 @@
-package ru.sharelist.sharelist.service;
+package ru.sharelist.sharelist.security.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sharelist.sharelist.config.JwtAccessConfigurationProperties;
-import ru.sharelist.sharelist.config.JwtRefreshConfigurationProperties;
-import ru.sharelist.sharelist.model.Credentials;
+import ru.sharelist.sharelist.security.config.JwtAccessConfigurationProperties;
+import ru.sharelist.sharelist.security.config.JwtRefreshConfigurationProperties;
+import ru.sharelist.sharelist.security.model.Credentials;
 
 import java.security.Key;
 

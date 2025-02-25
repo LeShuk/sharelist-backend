@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.controller;
+package ru.sharelist.sharelist;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sharelist.sharelist.model.JwtAuthentication;
-import ru.sharelist.sharelist.service.AuthService;
+import ru.sharelist.sharelist.security.model.JwtAuthentication;
+import ru.sharelist.sharelist.security.service.AuthService;
 
 //todo удалить контроллер
 

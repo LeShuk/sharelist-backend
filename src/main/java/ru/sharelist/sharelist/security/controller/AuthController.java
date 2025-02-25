@@ -1,14 +1,14 @@
-package ru.sharelist.sharelist.controller;
+package ru.sharelist.sharelist.security.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.sharelist.sharelist.exception.CustomBadCredentialsException;
-import ru.sharelist.sharelist.exception.InvalidJWTTokenException;
-import ru.sharelist.sharelist.model.dto.JwtRequestDto;
-import ru.sharelist.sharelist.model.dto.JwtResponseDto;
-import ru.sharelist.sharelist.model.dto.RefreshJwtRequestDto;
-import ru.sharelist.sharelist.service.AuthService;
+import ru.sharelist.sharelist.security.exception.CustomBadCredentialsException;
+import ru.sharelist.sharelist.security.exception.InvalidJWTTokenException;
+import ru.sharelist.sharelist.security.model.dto.JwtRequestDto;
+import ru.sharelist.sharelist.security.model.dto.JwtResponseDto;
+import ru.sharelist.sharelist.security.model.dto.RefreshJwtRequestDto;
+import ru.sharelist.sharelist.security.service.AuthService;
 
 @RestController
 @RequestMapping("/api/security")

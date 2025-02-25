@@ -1,8 +1,8 @@
-package ru.sharelist.sharelist.service;
+package ru.sharelist.sharelist.security.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sharelist.sharelist.model.Credentials;
+import ru.sharelist.sharelist.security.model.Credentials;
 
 import java.util.List;
 import java.util.Objects;

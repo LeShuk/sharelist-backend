@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.exception;
+package ru.sharelist.sharelist.security.exception;
 
 import org.springframework.security.authentication.BadCredentialsException;
 

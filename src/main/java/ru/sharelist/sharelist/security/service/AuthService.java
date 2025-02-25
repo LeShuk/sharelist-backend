@@ -1,15 +1,15 @@
-package ru.sharelist.sharelist.service;
+package ru.sharelist.sharelist.security.service;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.sharelist.sharelist.exception.CustomBadCredentialsException;
-import ru.sharelist.sharelist.exception.InvalidJWTTokenException;
-import ru.sharelist.sharelist.model.Credentials;
-import ru.sharelist.sharelist.model.JwtAuthentication;
-import ru.sharelist.sharelist.model.dto.JwtRequestDto;
-import ru.sharelist.sharelist.model.dto.JwtResponseDto;
+import ru.sharelist.sharelist.security.exception.CustomBadCredentialsException;
+import ru.sharelist.sharelist.security.exception.InvalidJWTTokenException;
+import ru.sharelist.sharelist.security.model.Credentials;
+import ru.sharelist.sharelist.security.model.JwtAuthentication;
+import ru.sharelist.sharelist.security.model.dto.JwtRequestDto;
+import ru.sharelist.sharelist.security.model.dto.JwtResponseDto;
 
 import java.util.HashMap;
 import java.util.Map;

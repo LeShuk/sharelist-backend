@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.filter;
+package ru.sharelist.sharelist.security.filter;
 
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -12,9 +12,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
-import ru.sharelist.sharelist.model.JwtAuthentication;
-import ru.sharelist.sharelist.service.JwtProvider;
-import ru.sharelist.sharelist.util.JwtUtils;
+import ru.sharelist.sharelist.security.model.JwtAuthentication;
+import ru.sharelist.sharelist.security.service.JwtProvider;
+import ru.sharelist.sharelist.security.util.JwtUtils;
 
 import java.io.IOException;
 

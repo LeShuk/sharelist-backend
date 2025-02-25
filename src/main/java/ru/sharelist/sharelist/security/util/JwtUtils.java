@@ -1,7 +1,7 @@
-package ru.sharelist.sharelist.util;
+package ru.sharelist.sharelist.security.util;
 
 import io.jsonwebtoken.Claims;
-import ru.sharelist.sharelist.model.JwtAuthentication;
+import ru.sharelist.sharelist.security.model.JwtAuthentication;
 
 public class JwtUtils {
 

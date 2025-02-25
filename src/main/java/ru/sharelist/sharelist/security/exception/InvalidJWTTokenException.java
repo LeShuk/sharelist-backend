@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.exception;
+package ru.sharelist.sharelist.security.exception;
 
 public class InvalidJWTTokenException extends Exception {
 
