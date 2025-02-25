@@ -14,9 +14,10 @@ public class CredentialService {
     private final List<Credentials> credentials;
 
     public CredentialService() {
+        //fixme получать credentials из БД
         credentials = List.of(
-          new Credentials("katya", "123"),
-          new Credentials("lyosha", "456")
+                new Credentials("katya", "123"),
+                new Credentials("lyosha", "456")
         );
     }
 

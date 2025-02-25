@@ -1,14 +1,13 @@
 package ru.sharelist.sharelist.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import ru.sharelist.sharelist.model.JwtRequestDto;
-import ru.sharelist.sharelist.model.JwtResponseDto;
-import ru.sharelist.sharelist.model.RefreshJwtRequestDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import ru.sharelist.sharelist.exception.CustomBadCredentialsException;
+import ru.sharelist.sharelist.exception.InvalidJWTTokenException;
+import ru.sharelist.sharelist.model.dto.JwtRequestDto;
+import ru.sharelist.sharelist.model.dto.JwtResponseDto;
+import ru.sharelist.sharelist.model.dto.RefreshJwtRequestDto;
 import ru.sharelist.sharelist.service.AuthService;
 
 @RestController
@@ -18,20 +17,15 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponseDto> login(@RequestBody JwtRequestDto authRequest) throws Exception {
-        final JwtResponseDto token = authService.login(authRequest);
-        return ResponseEntity.ok(token);
-    }
-
-    @PostMapping("/token")
-    public ResponseEntity<JwtResponseDto> getNewAccessToken(@RequestBody RefreshJwtRequestDto request) throws Exception {
-        final JwtResponseDto token = authService.getAccessToken(request.refreshToken());
-        return ResponseEntity.ok(token);
+    @ResponseStatus(HttpStatus.OK)
+    public JwtResponseDto login(@RequestBody JwtRequestDto authRequest) throws CustomBadCredentialsException {
+        return authService.login(authRequest);
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<JwtResponseDto> getNewRefreshToken(@RequestBody RefreshJwtRequestDto request) throws Exception {
-        final JwtResponseDto token = authService.refresh(request.refreshToken());
-        return ResponseEntity.ok(token);
+    @ResponseStatus(HttpStatus.OK)
+    public JwtResponseDto refresh(@RequestBody RefreshJwtRequestDto request)
+            throws CustomBadCredentialsException, InvalidJWTTokenException {
+        return authService.refresh(request.refreshToken());
     }
 }

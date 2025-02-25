@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
 @ControllerAdvice
-public class BaseControllerAdvice {
+public class SecurityControllerAdvice {
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
@@ -21,7 +21,7 @@ public class BaseControllerAdvice {
 
     private ResponseEntity<ErrorDetails> response(HttpStatus status, Exception ex) {
         ErrorDetails errorDetails = ErrorDetails.builder()
-                .time(LocalDateTime.now().format(dateTimeFormatter))
+                .time(dateTimeFormatter.format(Instant.now()))
                 .message(ex.getMessage())
                 .exceptionName(ex.getClass().getSimpleName())
                 .build();
