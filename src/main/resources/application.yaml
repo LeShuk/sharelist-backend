@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: share-list
+jwt:
+  access:
+    secret: ${JWT_ACCESS_SECRET}
+    expiration: ${JWT_ACCESS_EXPIRATION:900000} #15 min by default
+  refresh:
+    secret: ${JWT_REFRESH_SECRET}
+    expiration: ${JWT_REFRESH_EXPIRATION:1296000000} #15 days by default
