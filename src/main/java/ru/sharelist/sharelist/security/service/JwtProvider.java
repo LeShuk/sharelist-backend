@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import ru.sharelist.sharelist.security.config.JwtAccessConfigurationProperties;
 import ru.sharelist.sharelist.security.config.JwtRefreshConfigurationProperties;
@@ -13,6 +14,9 @@ import java.security.Key;
 
 @Component
 @RequiredArgsConstructor
+@EnableConfigurationProperties(
+        value = {JwtRefreshConfigurationProperties.class, JwtAccessConfigurationProperties.class}
+)
 public class JwtProvider {
 
     private final JwtAccessConfigurationProperties jwtAccessConfigurationProperties;

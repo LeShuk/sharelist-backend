@@ -5,7 +5,6 @@ import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.time.Instant;
@@ -14,7 +13,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "jwt.access")
-@Component
 public class JwtAccessConfigurationProperties {
     private String secret;
     private Integer expiration;

@@ -5,6 +5,6 @@ package ru.sharelist.sharelist.security.model.dto;
  */
 public record JwtResponseDto(String accessToken, String refreshToken, String type) {
     public JwtResponseDto(String accessToken, String refreshToken) {
-        this(accessToken, refreshToken, "Bearer_");
+        this(accessToken, refreshToken, "Bearer ");
     }
 }
