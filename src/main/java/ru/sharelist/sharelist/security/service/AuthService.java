@@ -24,17 +24,14 @@ public class AuthService {
     private final Map<String, String> refreshStorage = new HashMap<>();
 
     public JwtResponseDto login(JwtRequestDto jwtRequestDto) throws CustomBadCredentialsException {
-        Credentials credentials = credentialService.getByLogin(jwtRequestDto.login())
-                .orElseThrow(CustomBadCredentialsException::new);
-
-        if (!Objects.equals(credentials.password(), jwtRequestDto.password())) {
-            throw new CustomBadCredentialsException();
-        }
+        Credentials credentials = credentialService.getByLoginAndPassword(
+                jwtRequestDto.login(), jwtRequestDto.password()
+        );
 
         String accessToken = jwtProvider.generateAccessToken(credentials);
         String refreshToken = jwtProvider.generateRefreshToken(credentials);
 
-        refreshStorage.put(credentials.login(), refreshToken);
+        refreshStorage.put(credentials.getLogin(), refreshToken);
 
         return new JwtResponseDto(accessToken, refreshToken);
 
@@ -53,12 +50,11 @@ public class AuthService {
             throw new InvalidJWTTokenException();
         }
 
-        Credentials credentials = credentialService.getByLogin(login)
-                .orElseThrow(CustomBadCredentialsException::new);
+        Credentials credentials = credentialService.getByLogin(login);
 
         String accessToken = jwtProvider.generateAccessToken(credentials);
         final String newRefreshToken = jwtProvider.generateRefreshToken(credentials);
-        refreshStorage.put(credentials.login(), newRefreshToken);
+        refreshStorage.put(credentials.getLogin(), newRefreshToken);
         return new JwtResponseDto(accessToken, newRefreshToken);
     }
 

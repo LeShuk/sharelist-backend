@@ -1,5 +1,6 @@
 package ru.sharelist.sharelist.security.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public JwtResponseDto login(@RequestBody JwtRequestDto authRequest) throws CustomBadCredentialsException {
+    public JwtResponseDto login(@RequestBody @Valid JwtRequestDto authRequest) throws CustomBadCredentialsException {
         return authService.login(authRequest);
     }
 

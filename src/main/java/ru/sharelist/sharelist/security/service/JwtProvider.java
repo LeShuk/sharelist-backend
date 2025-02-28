@@ -27,7 +27,7 @@ public class JwtProvider {
         if (credentials == null) return null;
 
         return Jwts.builder()
-                .subject(credentials.login())
+                .subject(credentials.getLogin())
                 .expiration(jwtAccessConfigurationProperties.getExpirationDate())
                 .signWith(jwtAccessConfigurationProperties.getSecretKey())
                 .compact();
@@ -38,7 +38,7 @@ public class JwtProvider {
         if (credentials == null) return null;
 
         return Jwts.builder()
-                .subject(credentials.login())
+                .subject(credentials.getLogin())
                 .expiration(jwtRefreshConfigurationProperties.getExpirationDate())
                 .signWith(jwtRefreshConfigurationProperties.getSecretKey())
                 .compact();
