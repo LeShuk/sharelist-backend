@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "jwt.refresh")
+@ConfigurationProperties(prefix = "security.jwt.refresh")
 public class JwtRefreshConfigurationProperties {
     private String secret;
     private Integer expiration;
