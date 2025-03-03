@@ -10,6 +10,4 @@ import java.util.UUID;
 @Repository
 public interface CredentialsRepository extends JpaRepository<Credentials, UUID> {
     List<Credentials> getCredentialsByLogin(String login);
-
-    List<Credentials> getCredentialsByLoginAndPassword(String login, String password);
 }

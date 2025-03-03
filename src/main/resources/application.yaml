@@ -2,15 +2,14 @@ spring:
   application:
     name: share-list
   datasource:
-    username: postgres
-    password: 11
-    url: jdbc:postgresql://localhost:5432/sharelist
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://${DB_ADDRESS}/sharelist
     driver-class-name: org.postgresql.Driver
   flyway:
-    url: jdbc:postgresql://localhost:5432/sharelist
-    user: postgres
-    password: 11
-    locations: classpath:db/migration/V00
+    url: jdbc:postgresql://${DB_ADDRESS}/sharelist
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: validate

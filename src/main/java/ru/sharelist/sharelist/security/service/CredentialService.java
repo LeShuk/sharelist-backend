@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sharelist.sharelist.security.exception.CustomBadCredentialsException;
 import ru.sharelist.sharelist.security.model.Credentials;
 import ru.sharelist.sharelist.security.repository.CredentialsRepository;
+import ru.sharelist.sharelist.security.util.PasswordUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +20,10 @@ public class CredentialService {
     }
 
     public Credentials getByLoginAndPassword(String login, String password) {
-        return credentialsRepository.getCredentialsByLoginAndPassword(login, password)
-                .stream()
-                .findFirst()
-                .orElseThrow(CustomBadCredentialsException::new);
+        Credentials credentials = getByLogin(login);
+        if (PasswordUtil.matches(password, credentials.getPassword())) {
+            return credentials;
+        }
+        throw new CustomBadCredentialsException();
     }
 }
