@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 import ru.sharelist.sharelist.security.config.JwtAccessConfigurationProperties;
 import ru.sharelist.sharelist.security.config.JwtRefreshConfigurationProperties;
-import ru.sharelist.sharelist.security.model.Credentials;
+import ru.sharelist.sharelist.security.model.entity.Credentials;
 
 import java.security.Key;
 

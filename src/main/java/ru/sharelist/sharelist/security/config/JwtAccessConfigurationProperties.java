@@ -16,6 +16,7 @@ import java.util.Date;
 public class JwtAccessConfigurationProperties {
     private String secret;
     private Integer expiration;
+    private String prefix;
 
     public Key getSecretKey() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));

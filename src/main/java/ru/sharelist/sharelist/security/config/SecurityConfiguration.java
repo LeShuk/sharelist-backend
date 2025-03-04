@@ -14,7 +14,7 @@ import ru.sharelist.sharelist.security.filter.JwtFilter;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
 

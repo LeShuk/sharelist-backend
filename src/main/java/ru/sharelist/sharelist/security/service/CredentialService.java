@@ -3,7 +3,7 @@ package ru.sharelist.sharelist.security.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sharelist.sharelist.security.exception.CustomBadCredentialsException;
-import ru.sharelist.sharelist.security.model.Credentials;
+import ru.sharelist.sharelist.security.model.entity.Credentials;
 import ru.sharelist.sharelist.security.repository.CredentialsRepository;
 import ru.sharelist.sharelist.security.util.PasswordUtil;
 

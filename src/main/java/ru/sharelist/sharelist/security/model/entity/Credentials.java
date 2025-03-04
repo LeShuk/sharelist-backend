@@ -1,4 +1,4 @@
-package ru.sharelist.sharelist.security.model;
+package ru.sharelist.sharelist.security.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
