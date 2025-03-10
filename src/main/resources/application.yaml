@@ -13,15 +13,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-jwt:
-  access:
-    secret: ${JWT_ACCESS_SECRET}
-    expiration: ${JWT_ACCESS_EXPIRATION:900000} #15 min by default
-    prefix: Bearer
-  refresh:
-    secret: ${JWT_REFRESH_SECRET}
-    expiration: ${JWT_REFRESH_EXPIRATION:1296000000} #15 days by default
-    prefix: Refresh
-    scheduling:
-      cleanup:
-        cron: 0 0 1 * * ? #Every day at 1am
+security:
+  allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:5173}
+  jwt:
+    access:
+      secret: ${JWT_ACCESS_SECRET}
+      expiration: ${JWT_ACCESS_EXPIRATION:900000} #15 min by default
+      prefix: Bearer
+    refresh:
+      secret: ${JWT_REFRESH_SECRET}
+      expiration: ${JWT_REFRESH_EXPIRATION:1296000000} #15 days by default
+      prefix: Refresh
+      scheduling:
+        cleanup:
+          cron: 0 0 1 * * ? #Every day at 1am
