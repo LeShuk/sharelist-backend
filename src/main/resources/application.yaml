@@ -1,12 +1,29 @@
 spring:
   application:
     name: share-list
+  datasource:
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://${DB_ADDRESS}/sharelist
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    url: jdbc:postgresql://${DB_ADDRESS}/sharelist
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
 security:
   allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:5173}
   jwt:
     access:
       secret: ${JWT_ACCESS_SECRET}
       expiration: ${JWT_ACCESS_EXPIRATION:900000} #15 min by default
+      prefix: Bearer_
     refresh:
       secret: ${JWT_REFRESH_SECRET}
       expiration: ${JWT_REFRESH_EXPIRATION:1296000000} #15 days by default
+      prefix: Refresh_
+      scheduling:
+        cleanup:
+          cron: 0 0 1 * * ? #Every day at 1am

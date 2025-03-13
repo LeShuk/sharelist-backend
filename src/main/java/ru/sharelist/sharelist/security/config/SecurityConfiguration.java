@@ -23,7 +23,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
 

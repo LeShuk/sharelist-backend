@@ -2,28 +2,26 @@ package ru.sharelist.sharelist.security.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sharelist.sharelist.security.model.Credentials;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import ru.sharelist.sharelist.security.exception.CustomBadCredentialsException;
+import ru.sharelist.sharelist.security.model.entity.Credentials;
+import ru.sharelist.sharelist.security.repository.CredentialsRepository;
+import ru.sharelist.sharelist.security.util.PasswordUtil;
 
 @Service
 @RequiredArgsConstructor
 public class CredentialService {
-    private final List<Credentials> credentials;
+    private final CredentialsRepository credentialsRepository;
 
-    public CredentialService() {
-        //fixme получать credentials из БД
-        credentials = List.of(
-                new Credentials("katya", "123"),
-                new Credentials("lyosha", "456")
-        );
+    public Credentials getByLogin(String login) {
+        return credentialsRepository.getCredentialsByLogin(login)
+                .orElseThrow(CustomBadCredentialsException::new);
     }
 
-    public Optional<Credentials> getByLogin(String login) {
-        return credentials.stream()
-                .filter(credential -> Objects.equals(credential.login(), login))
-                .findFirst();
+    public Credentials getByLoginAndPassword(String login, String password) {
+        Credentials credentials = getByLogin(login);
+        if (PasswordUtil.matches(password, credentials.getPassword())) {
+            return credentials;
+        }
+        throw new CustomBadCredentialsException();
     }
 }
