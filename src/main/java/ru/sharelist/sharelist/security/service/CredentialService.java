@@ -14,8 +14,6 @@ public class CredentialService {
 
     public Credentials getByLogin(String login) {
         return credentialsRepository.getCredentialsByLogin(login)
-                .stream()
-                .findFirst()
                 .orElseThrow(CustomBadCredentialsException::new);
     }
 

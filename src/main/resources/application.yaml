@@ -19,11 +19,11 @@ security:
     access:
       secret: ${JWT_ACCESS_SECRET}
       expiration: ${JWT_ACCESS_EXPIRATION:900000} #15 min by default
-      prefix: Bearer
+      prefix: Bearer_
     refresh:
       secret: ${JWT_REFRESH_SECRET}
       expiration: ${JWT_REFRESH_EXPIRATION:1296000000} #15 days by default
-      prefix: Refresh
+      prefix: Refresh_
       scheduling:
         cleanup:
           cron: 0 0 1 * * ? #Every day at 1am

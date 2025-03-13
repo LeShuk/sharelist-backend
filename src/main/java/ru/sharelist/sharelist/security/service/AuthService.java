@@ -6,9 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import ru.sharelist.sharelist.security.config.JwtAccessConfigurationProperties;
-import ru.sharelist.sharelist.security.config.JwtRefreshConfigurationProperties;
-import ru.sharelist.sharelist.security.exception.CustomBadCredentialsException;
 import ru.sharelist.sharelist.security.exception.InvalidJWTTokenException;
 import ru.sharelist.sharelist.security.model.dto.RefreshJwtRequestDto;
 import ru.sharelist.sharelist.security.model.entity.Credentials;
@@ -17,6 +14,7 @@ import ru.sharelist.sharelist.security.model.dto.JwtRequestDto;
 import ru.sharelist.sharelist.security.model.dto.JwtResponseDto;
 import ru.sharelist.sharelist.security.model.entity.JwtRefreshToken;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Service
@@ -25,11 +23,8 @@ public class AuthService {
     private final CredentialService credentialService;
     private final JwtProvider jwtProvider;
     private final JwtRefreshTokenService jwtRefreshTokenService;
-    private final JwtRefreshConfigurationProperties jwtRefreshConfigurationProperties;
-    private final JwtAccessConfigurationProperties jwtAccessConfigurationProperties;
 
-    public JwtResponseDto login(JwtRequestDto jwtRequestDto, HttpServletResponse response)
-            throws CustomBadCredentialsException {
+    public JwtResponseDto login(JwtRequestDto jwtRequestDto, HttpServletResponse response) {
         Credentials credentials = credentialService.getByLoginAndPassword(
                 jwtRequestDto.login(), jwtRequestDto.password()
         );
@@ -37,14 +32,14 @@ public class AuthService {
         String accessToken = jwtProvider.generateAccessToken(credentials);
         String refreshToken = jwtProvider.generateRefreshToken(credentials);
 
-        saveRefreshToken(credentials.getLogin(), refreshToken);
-        setRefreshToken(response, refreshToken);
+        updateRefreshToken(credentials.getLogin(), refreshToken);
+        setRefreshTokenToCookie(response, refreshToken);
 
         return createJwtResponse(accessToken);
     }
 
     public JwtResponseDto refresh(RefreshJwtRequestDto refreshJwtRequestDto, HttpServletResponse response)
-            throws InvalidJWTTokenException, CustomBadCredentialsException {
+            throws InvalidJWTTokenException {
         if (refreshJwtRequestDto == null) {
             return null;
         }
@@ -67,8 +62,8 @@ public class AuthService {
         String accessToken = jwtProvider.generateAccessToken(credentials);
         String newRefreshToken = jwtProvider.generateRefreshToken(credentials);
 
-        saveRefreshToken(credentials.getLogin(), newRefreshToken);
-        setRefreshToken(response, refreshToken);
+        updateRefreshToken(login, newRefreshToken);
+        setRefreshTokenToCookie(response, refreshToken);
 
         return createJwtResponse(accessToken);
     }
@@ -78,14 +73,18 @@ public class AuthService {
     }
 
     /**
-     * Сохраняет refreshToken в базе данных
+     * Удаляет из БД старые refreshToken пользователя и сохраняет новый
      */
-    private void saveRefreshToken(String login, String token) {
-        JwtRefreshToken refreshToken = new JwtRefreshToken();
-        refreshToken.setLogin(login);
-        refreshToken.setToken(token);
+    public void updateRefreshToken(String login, String token) {
+        jwtRefreshTokenService.deleteAllByLogin(login);
 
-        jwtRefreshTokenService.save(refreshToken);
+        JwtRefreshToken jwtRefreshToken = new JwtRefreshToken();
+        jwtRefreshToken.setLogin(login);
+        jwtRefreshToken.setToken(token);
+        jwtRefreshToken.setExpiredAt(
+                Instant.now().plusMillis(jwtProvider.getRefreshExpiration())
+        );
+        jwtRefreshTokenService.save(jwtRefreshToken);
     }
 
     /**
@@ -99,18 +98,19 @@ public class AuthService {
     /**
      * Устанавливает refreshToken в cookie
      */
-    private void setRefreshToken(HttpServletResponse response, String refreshToken) {
+    public void setRefreshTokenToCookie(HttpServletResponse response, String refreshToken) {
         Cookie newCookieToken = new Cookie(
                 "refreshToken",
-                jwtAccessConfigurationProperties.getPrefix() + " " + refreshToken
+                jwtProvider.getRefreshPrefix() + refreshToken
         );
-        newCookieToken.setMaxAge(jwtRefreshConfigurationProperties.getExpiration() / 1000);
+        newCookieToken.setHttpOnly(true);
+        newCookieToken.setMaxAge(jwtProvider.getRefreshExpiration() / 1000);
 
         response.addCookie(newCookieToken);
     }
 
     private JwtResponseDto createJwtResponse(String accessToken) {
-        String value = jwtAccessConfigurationProperties.getPrefix() + " " + accessToken;
+        String value = jwtProvider.getAccessPrefix() + accessToken;
         return new JwtResponseDto(value);
     }
 }

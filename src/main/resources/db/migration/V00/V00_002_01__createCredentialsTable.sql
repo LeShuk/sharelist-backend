@@ -1,3 +1,11 @@
+/*
+ -- Rollback script:
+
+ DROP TABLE credentials;
+
+ DELETE FROM flyway_schema_history WHERE version='00.002.01';
+ */
+
 CREATE TABLE credentials
 (
     id       UUID         NOT NULL,
@@ -8,3 +16,9 @@ CREATE TABLE credentials
 
 ALTER TABLE credentials
     ADD CONSTRAINT uc_credentials_login UNIQUE (login);
+
+-- DROP INDEX IF EXISTS idx_credentials_login;
+
+CREATE INDEX idx_credentials_login
+    ON credentials USING btree
+    (login COLLATE pg_catalog."default" ASC NULLS LAST);

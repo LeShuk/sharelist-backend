@@ -12,5 +12,7 @@ import java.util.UUID;
 public interface JwtRefreshTokenRepository extends JpaRepository<JwtRefreshToken, UUID> {
     List<JwtRefreshToken> getRefreshTokenByLogin(String login);
 
-    List<JwtRefreshToken> findAllByCreatedAtBefore(Instant createdAtBefore);
+    List<JwtRefreshToken> findAllByExpiredAtBefore(Instant expiredAtBefore);
+
+    void deleteAllByLogin(String login);
 }

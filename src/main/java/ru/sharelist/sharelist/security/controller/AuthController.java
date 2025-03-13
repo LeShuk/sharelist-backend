@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.sharelist.sharelist.security.exception.CustomBadCredentialsException;
 import ru.sharelist.sharelist.security.exception.InvalidJWTTokenException;
 import ru.sharelist.sharelist.security.model.dto.JwtRequestDto;
 import ru.sharelist.sharelist.security.model.dto.JwtResponseDto;
@@ -21,14 +20,14 @@ public class AuthController {
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public JwtResponseDto login(@RequestBody @Valid JwtRequestDto authRequest,
-                                HttpServletResponse response) throws CustomBadCredentialsException {
+                                HttpServletResponse response) {
         return authService.login(authRequest, response);
     }
 
     @PostMapping("/refresh")
     @ResponseStatus(HttpStatus.OK)
     public JwtResponseDto refresh(@RequestBody @Valid RefreshJwtRequestDto request, HttpServletResponse response)
-            throws CustomBadCredentialsException, InvalidJWTTokenException {
+            throws InvalidJWTTokenException {
         return authService.refresh(request, response);
     }
 }
